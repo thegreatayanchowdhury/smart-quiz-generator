@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ topic }} Quiz</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>{{ topic }} Quiz</h1>
+
+    <form action="/score" method="POST">
+
+        <input
+            type="hidden"
+            name="total"
+            value="{{ questions|length }}">
+
+        {% for q in questions %}
+
+            {% set q_index = loop.index0 %}
+
+            <div class="question">
+
+                <h3>{{ loop.index }}. {{ q.question }}</h3>
+
+                {% for option in q.options %}
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q{{ q_index }}"
+                            value="{{ option }}"
+                            required>
+
+                        {{ option }}
+                    </label>
+
+                    <br>
+
+                {% endfor %}
+
+                <input
+                    type="hidden"
+                    name="a{{ q_index }}"
+                    value="{{ q.answer }}">
+
+            </div>
+
+            <hr>
+
+        {% endfor %}
+
+        <button type="submit">
+            Submit Quiz
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
